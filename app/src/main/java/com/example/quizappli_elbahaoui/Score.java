@@ -34,13 +34,14 @@ public class Score extends AppCompatActivity {
         bTry=(Button) findViewById(R.id.bTry);
         Intent intent=getIntent();
         score=intent.getIntExtra("score",0) ;
-        progressBar.setProgress(100*score/5);
-        tvScore.setText(100*score/5+" %");
+        progressBar.setProgress(score*20);
+        tvScore.setText((score*20)+" %");
         //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
         bLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Merci de votre Participation !", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Score.this,MainActivity.class));
                 finish();
             }
         });

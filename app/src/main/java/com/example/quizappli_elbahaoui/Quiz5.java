@@ -2,19 +2,23 @@ package com.example.quizappli_elbahaoui;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Quiz5 extends AppCompatActivity {
@@ -23,7 +27,8 @@ public class Quiz5 extends AppCompatActivity {
     RadioButton rb;
     Button bNext;
     int score;
-    String RepCorrect="Non";
+    String RepCorrect="Brasilia";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +37,15 @@ public class Quiz5 extends AppCompatActivity {
         bNext=(Button) findViewById(R.id.bNext);
         Intent intent=getIntent();
         score=intent.getIntExtra("score",0) ;
-//Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
         bNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rb=(RadioButton) findViewById(rg.getCheckedRadioButtonId());
+
+
+
                 if(rg.getCheckedRadioButtonId()==-1){
                     Toast.makeText(getApplicationContext(),"Merci de choisir une réponse S.V.P !",Toast.LENGTH_SHORT).show();
                 }
@@ -46,16 +55,16 @@ public class Quiz5 extends AppCompatActivity {
                         score+=1;
                         //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
                     }
-                    Intent intent=new Intent(Quiz5.this,Score.class);
-                    intent.putExtra("score",score);
-                    startActivity(intent);
-                    //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
-                    overridePendingTransition(R.anim.exit,R.anim.entry);
-                    finish();
+
+                                    Intent intent=new Intent(Quiz5.this,Score.class);
+                                    intent.putExtra("score",score);
+                                    startActivity(intent);
+                                    //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                                    overridePendingTransition(R.anim.exit,R.anim.entry);
+                                    finish();
+                                }
+
                 }
-
-            }
-        });
-
+            });
+        };
     }
-}
