@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,6 +31,8 @@ public class Quiz4 extends AppCompatActivity {
     int score;
     String RepCorrect="Buenos Aires";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +41,7 @@ public class Quiz4 extends AppCompatActivity {
         bNext=(Button) findViewById(R.id.bNext);
         Intent intent=getIntent();
         score=intent.getIntExtra("score",0) ;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
         bNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +61,15 @@ public class Quiz4 extends AppCompatActivity {
                     }
 
 
-                                    Intent intent=new Intent(Quiz4.this,Quiz5.class);
-                                    intent.putExtra("score",score);
+                                    Intent intent = new Intent(Quiz4.this, Quiz5.class);
+                                    intent.putExtra("score", score);
                                     startActivity(intent);
                                     //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
-                                    overridePendingTransition(R.anim.exit,R.anim.entry);
+                                    overridePendingTransition(R.anim.exit, R.anim.entry);
                                     finish();
-                                }
+
+
+                }
                             };
                 });
             }

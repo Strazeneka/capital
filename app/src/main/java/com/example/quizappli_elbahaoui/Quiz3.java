@@ -9,6 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class Quiz3 extends AppCompatActivity {
     int score;
     String RepCorrect="Madrid";
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,8 @@ public class Quiz3 extends AppCompatActivity {
         bNext=(Button) findViewById(R.id.bNext);
         Intent intent=getIntent();
         score=intent.getIntExtra("score",0) ;
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
         //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
         bNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +52,14 @@ public class Quiz3 extends AppCompatActivity {
                         score+=1;
                         //Toast.makeText(getApplicationContext(),score+"",Toast.LENGTH_SHORT).show();
                     }
-                    Intent intent=new Intent(Quiz3.this,Quiz4.class);
-                    intent.putExtra("score",score);
-                    startActivity(intent);
-                    //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
-                    overridePendingTransition(R.anim.exit,R.anim.entry);
-                    finish();
+
+                                    Intent intent = new Intent(Quiz3.this, Quiz4.class);
+                                    intent.putExtra("score", score);
+                                    startActivity(intent);
+                                    //overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                                    overridePendingTransition(R.anim.exit, R.anim.entry);
+                                    finish();
+
                 }
             }
         });

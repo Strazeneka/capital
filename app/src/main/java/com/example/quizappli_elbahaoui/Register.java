@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Register extends AppCompatActivity {
@@ -27,6 +31,7 @@ public class Register extends AppCompatActivity {
     EditText etMail, etPassword, etPassword1;
     Button bRegister;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class Register extends AppCompatActivity {
         etPassword1=(EditText)findViewById(R.id.etPassword1);
         bRegister=(Button)findViewById(R.id.bRegister);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +69,8 @@ public class Register extends AppCompatActivity {
                     return;
                 }
                 signUpWithEmailAndPassword(mail, password);
+                saveUserDataToFirestore(mail);
+
 
 
                 //Commen.login=Mail;
@@ -90,7 +98,24 @@ public class Register extends AppCompatActivity {
                     }
                 });
     }
+    private void saveUserDataToFirestore(String mail) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+        user.put("email", mail);
+        // Add any other user information you want to save
+        db.collection("users").document(mail).set(user)
+                .addOnSuccessListener(aVoid -> {
+                    // User data saved successfully
+                    Toast.makeText(Register.this, "User data saved to Firestore", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors
+                    Toast.makeText(Register.this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
 }
+
+
 
 
 
