@@ -29,7 +29,7 @@ public class Quiz4 extends AppCompatActivity {
     RadioButton rb;
     Button bNext;
     int score;
-    String RepCorrect="Buenos Aires";
+    String RepCorrect="Sydney";
 
 
 

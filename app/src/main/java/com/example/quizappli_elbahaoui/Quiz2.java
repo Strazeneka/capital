@@ -31,7 +31,7 @@ public class Quiz2 extends AppCompatActivity {
     RadioButton rb;
     Button bNext;
     int score;
-    String RepCorrect = "Rabat";
+    String RepCorrect = "Mexico City";
 
     private FirebaseAuth mAuth;
     private boolean isPictureUploaded = false;

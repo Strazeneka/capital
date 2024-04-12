@@ -29,7 +29,7 @@ public class Quiz5 extends AppCompatActivity {
     RadioButton rb;
     Button bNext;
     int score;
-    String RepCorrect="Brasilia";
+    String RepCorrect="London";
 
 
     @Override

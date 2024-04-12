@@ -28,7 +28,7 @@ public class Quiz1 extends AppCompatActivity {
     RadioButton rb;
     Button bNext;
     int score=0;
-    String RepCorrect="Rome";
+    String RepCorrect="Amsterdam";
     FirebaseFirestore db;
 
 
