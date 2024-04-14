@@ -21,6 +21,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,8 @@ public class Quiz2 extends AppCompatActivity {
     String RepCorrect = "Mexico City";
 
     private FirebaseAuth mAuth;
-    private boolean isPictureUploaded = false;
+    /*private boolean isPictureUploaded = false;*/
+    FirebaseFirestore db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class Quiz2 extends AppCompatActivity {
 
         // Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Set click listener for the next button
         bNext.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +63,36 @@ public class Quiz2 extends AppCompatActivity {
                     if (rb.getText().toString().equals(RepCorrect)) {
                         score += 1;
                     }
+                    String question = "What is the capital of Mexico ?";
+                    String image = "https://firebasestorage.googleapis.com/v0/b/quizappli-elbahaoui.appspot.com/o/images%2Fq2.jpg?alt=media&token=657ca94c-63e7-40fa-a7b8-7c0a90b70c29";
+                    String[] reponses = {"Puebla", "Mexico City", "Tijuana"};
+                   // int score = 0;
+                    //String repCorrecte = "Amsterdam";
+                    // String selectedAnswer = rb.getText().toString();
+                    String documentId = "2";
+
+                    Map<String, Object> quizData = new HashMap<>();
+                    quizData.put("question", question);
+                    quizData.put("image", image);
+                    quizData.put("reponses", Arrays.asList(reponses));
+                    quizData.put("score", score);
+                    //quizData.put("reponseCorrecte", reponseCorrecte);
+                    // quizData.put("selectedAnswer", selectedAnswer);
+                    db.collection("Quiz2").document(documentId)
+                            .set(quizData)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                                    // Redirection ou autres actions
+                                }
+                            });
 
                     // Upload picture to Firebase Storage
 
-                    if (!isPictureUploaded) {
+                    /*if (!isPictureUploaded) {
                         uploadPictureToStorage();
-                    }
+                    }*/
 
                     // Start the next quiz activity
                     Intent intent = new Intent(Quiz2.this, Quiz3.class);
@@ -79,7 +106,7 @@ public class Quiz2 extends AppCompatActivity {
     }
 
     // Method to upload the picture associated with Quiz2 to Firebase Storage
-    private void uploadPictureToStorage() {
+    /* private void uploadPictureToStorage() {
         // Get a reference to Firebase Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -108,7 +135,7 @@ public class Quiz2 extends AppCompatActivity {
             isPictureUploaded = true;
         }).addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-            Toast.makeText(getApplicationContext(), "Failed to upload picture: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-        });
-    }
+            Toast.makeText(getApplicationContext(), "Failed to upload picture: " + exception.getMessage(), Toast.LENGTH_SHORT).show();*/
+       // });
+   // }
 }
